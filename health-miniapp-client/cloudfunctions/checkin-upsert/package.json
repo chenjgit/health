@@ -1,0 +1,9 @@
+{
+  "name": "checkin-upsert",
+  "version": "1.0.0",
+  "description": "保存/更新打卡云函数",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

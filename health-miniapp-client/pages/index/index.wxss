@@ -1,0 +1,11 @@
+@import "../../app.wxss";
+
+.page {
+  padding-bottom: 40rpx;
+}
+
+.sub {
+  color: #6b7280;
+  font-size: 28rpx;
+}
+

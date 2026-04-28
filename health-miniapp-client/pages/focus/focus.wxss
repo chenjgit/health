@@ -1,0 +1,309 @@
+@import "../../app.wxss";
+
+.page {
+  padding-bottom: 40rpx;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 40rpx;
+  font-weight: 700;
+}
+
+.sub {
+  margin-top: 10rpx;
+  color: #6b7280;
+  font-size: 26rpx;
+}
+
+.tab {
+  padding: 10rpx 18rpx;
+  border-radius: 999rpx;
+  background: #f0fdf4;
+  color: #15803d;
+  border: 2rpx solid #bbf7d0;
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10rpx 0;
+}
+
+.label {
+  color: #111827;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.value {
+  color: #374151;
+  font-size: 28rpx;
+}
+
+.picker {
+  color: #15803d;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.input {
+  flex: 1;
+  margin-left: 20rpx;
+  padding: 10rpx 14rpx;
+  border-radius: 14rpx;
+  background: #f9fafb;
+  border: 2rpx solid #e5e7eb;
+  font-size: 28rpx;
+  color: #111827;
+}
+
+.actions {
+  margin-top: 14rpx;
+  display: flex;
+  gap: 12rpx;
+}
+
+.ghost {
+  flex: 1;
+  background: #f0fdf4;
+  color: #15803d;
+  border: 2rpx solid #bbf7d0;
+}
+
+.primary {
+  flex: 1;
+  background: #22c55e;
+  color: #ffffff;
+}
+
+.stats {
+  padding-top: 26rpx;
+  padding-bottom: 26rpx;
+}
+
+.timer {
+  text-align: center;
+  font-size: 56rpx;
+  font-weight: 800;
+  color: #111827;
+}
+
+.stats-row {
+  margin-top: 16rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #374151;
+  font-size: 26rpx;
+}
+
+.stats-item {
+  flex: 1;
+  text-align: center;
+}
+
+.strong {
+  color: #111827;
+  font-weight: 800;
+}
+
+.penalty {
+  margin-top: 14rpx;
+  text-align: center;
+  color: #b45309;
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
+.ref {
+  margin-top: 16rpx;
+  display: flex;
+  gap: 10rpx;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ref-item {
+  padding: 8rpx 12rpx;
+  border-radius: 999rpx;
+  background: #f3f4f6;
+  color: #374151;
+  font-size: 24rpx;
+}
+
+.stage-result {
+  margin-top: 12rpx;
+  text-align: center;
+  color: #15803d;
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.cell {
+  border-radius: 14rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f9fafb;
+  border: 2rpx solid #e5e7eb;
+  color: #111827;
+  font-weight: 700;
+}
+
+.cell.correct {
+  background: #dcfce7;
+  border-color: #86efac;
+  color: #166534;
+}
+
+.cell.wrong {
+  background: #fee2e2;
+  border-color: #fecaca;
+  color: #991b1b;
+}
+
+.result-line {
+  margin-top: 10rpx;
+  color: #374151;
+  font-size: 26rpx;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16rpx;
+  padding: 16rpx 0;
+  border-top: 2rpx solid #f3f4f6;
+}
+
+.history-main {
+  flex: 1;
+}
+
+.history-title {
+  color: #111827;
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
+.history-sub {
+  margin-top: 6rpx;
+  color: #6b7280;
+  font-size: 24rpx;
+}
+
+.history-time {
+  color: #9ca3af;
+  font-size: 22rpx;
+  white-space: nowrap;
+}
+
+.board-item {
+  display: flex;
+  gap: 16rpx;
+  padding: 14rpx 0;
+  border-top: 2rpx solid #f3f4f6;
+}
+
+.board-rank {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 999rpx;
+  background: #f3f4f6;
+  color: #111827;
+  font-size: 24rpx;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.board-main {
+  flex: 1;
+}
+
+.board-title {
+  color: #111827;
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
+.board-sub {
+  margin-top: 6rpx;
+  color: #6b7280;
+  font-size: 24rpx;
+}
+
+.ref-section {
+  margin-top: 16rpx;
+}
+
+.ref-header {
+  height: 72rpx;
+  line-height: 72rpx;
+  border-radius: 14rpx;
+  text-align: center;
+  font-size: 30rpx;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.ref-tone-0 {
+  background: #60a5fa;
+}
+
+.ref-tone-1 {
+  background: #34d399;
+}
+
+.ref-tone-2 {
+  background: #fbbf24;
+}
+
+.ref-table {
+  margin-top: 12rpx;
+  border-radius: 14rpx;
+  overflow: hidden;
+  border: 2rpx solid #e5e7eb;
+}
+
+.ref-row {
+  display: flex;
+  background: #ffffff;
+}
+
+.ref-row:nth-child(odd) {
+  background: #f9fafb;
+}
+
+.ref-row.ref-head {
+  background: #f3f4f6;
+}
+
+.ref-cell {
+  flex: 1;
+  padding: 18rpx 10rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #111827;
+}
+
+.ref-row.ref-head .ref-cell {
+  font-weight: 800;
+}

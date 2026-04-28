@@ -1,0 +1,10 @@
+{
+  "name": "plan-update",
+  "version": "1.0.0",
+  "description": "健康计划更新云函数",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}
+

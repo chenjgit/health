@@ -1,0 +1,88 @@
+<view class="page">
+  <!-- 签到状态卡片 -->
+  <view class="card checkin-status">
+    <view class="status-row">
+      <view class="status-main">
+        <view class="streak-num">{{streakDays}}</view>
+        <view class="streak-label">连续签到天数</view>
+      </view>
+      <view class="status-main">
+        <view class="streak-num">{{totalDays}}</view>
+        <view class="streak-label">累计签到</view>
+      </view>
+    </view>
+    <view wx:if="{{todayChecked}}" class="checked-badge">今日已签到 ✓</view>
+  </view>
+
+  <view wx:if="{{lastSavedAt}}" class="card">
+    <view class="sub">最后保存：{{lastSavedAt}}</view>
+  </view>
+
+  <view class="card">
+    <view class="calendar-header">
+      <view class="calendar-nav" bindtap="onPrevMonth">‹</view>
+      <view class="calendar-title">{{calendarMonth}}</view>
+      <view class="calendar-nav" bindtap="onNextMonth">›</view>
+    </view>
+    <view class="calendar-week">
+      <view wx:for="{{weekDays}}" wx:key="*this" class="week-cell">{{item}}</view>
+    </view>
+    <view class="calendar-grid">
+      <view wx:for="{{calendarDays}}" wx:key="dateStr" class="day-cell {{!item.isCurrentMonth ? 'muted' : ''}} {{item.isToday ? 'today' : ''}}">
+        <view class="day-num">{{item.day}}</view>
+        <view wx:if="{{item.checked}}" class="day-dot"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 打卡表单 -->
+  <view class="card">
+    <view class="title">今天的健康打卡</view>
+    <view class="sub">记录饮水、步数、睡眠与心情</view>
+  </view>
+
+  <view class="card">
+    <view class="field">
+      <view class="label">饮水量（ml）</view>
+      <input class="input" type="number" placeholder="例如 1500" value="{{form.waterMl}}" bindinput="onWater" />
+    </view>
+
+    <view class="field">
+      <view class="label">步数</view>
+      <input class="input" type="number" placeholder="例如 8000" value="{{form.steps}}" bindinput="onSteps" />
+    </view>
+
+    <view class="field">
+      <view class="label">睡眠（小时）</view>
+      <input class="input" type="digit" placeholder="例如 7.5" value="{{form.sleepHours}}" bindinput="onSleep" />
+    </view>
+
+    <view class="field">
+      <view class="label">心情</view>
+      <picker mode="selector" range="{{moods}}" value="{{moodIndex}}" bindchange="onMood">
+        <view class="picker">{{form.mood || "请选择"}}</view>
+      </picker>
+    </view>
+
+    <view class="field">
+      <view class="label">备注</view>
+      <textarea class="textarea" placeholder="今天有什么想记录的？" value="{{form.note}}" bindinput="onNote" />
+    </view>
+
+    <button class="primary" loading="{{saving}}" bindtap="onSave">保存今日打卡</button>
+  </view>
+
+  <!-- 最近打卡记录 -->
+  <view wx:if="{{history.length}}" class="card">
+    <view class="section-title">最近打卡记录</view>
+    <view wx:for="{{history}}" wx:key="_id" class="history-item">
+      <view class="history-date">{{item.dateStr}}</view>
+      <view class="history-detail">
+        <text wx:if="{{item.waterMl}}">💧{{item.waterMl}}ml</text>
+        <text wx:if="{{item.steps}}"> 🚶{{item.steps}}步</text>
+        <text wx:if="{{item.sleepHours}}"> 😴{{item.sleepHours}}h</text>
+        <text wx:if="{{item.mood}}"> {{item.mood}}</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,90 @@
+<view class="page">
+  <view class="card">
+    <view class="title-row">
+      <view class="title">健康计划</view>
+      <button class="primary-mini" size="mini" bindtap="openCreate">新增</button>
+    </view>
+    <view class="sub">支持新增/修改/删除，并可将自己的计划设为推荐</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="card">
+    <view class="sub">加载中...</view>
+  </view>
+
+  <view wx:if="{{editing}}" class="card">
+    <view class="section-title" style="margin:0;">{{editForm._id ? "编辑计划" : "新增计划"}}</view>
+    <view class="field">
+      <view class="label">名称</view>
+      <input class="input" placeholder="例如：30天全面提升" value="{{editForm.name}}" bindinput="onName" />
+    </view>
+    <view class="field">
+      <view class="label">天数</view>
+      <input class="input" type="number" placeholder="例如：7" value="{{editForm.days}}" bindinput="onDays" />
+    </view>
+    <view class="field">
+      <view class="label">等级</view>
+      <input class="input" placeholder="例如：入门/进阶" value="{{editForm.level}}" bindinput="onLevel" />
+    </view>
+    <view class="field">
+      <view class="label">简介</view>
+      <textarea class="textarea" placeholder="一句话概述" value="{{editForm.summary}}" bindinput="onSummary" />
+    </view>
+    <view class="field">
+      <view class="label">内容</view>
+      <textarea class="textarea" placeholder="按天填写内容" value="{{editForm.content}}" bindinput="onContent" />
+    </view>
+    <view class="actions">
+      <button class="ghost" bindtap="cancelEdit">取消</button>
+      <button class="primary" loading="{{saving}}" bindtap="savePlan">保存</button>
+    </view>
+  </view>
+
+  <view wx:if="{{recommended.length}}" class="section-title">推荐计划</view>
+  <view wx:for="{{recommended}}" wx:key="_id" class="card" data-id="{{item._id}}" bindtap="goDetail">
+    <view class="plan-name">{{item.name}}</view>
+    <view class="plan-meta">
+      <text wx:if="{{item.level}}">{{item.level}}</text>
+      <text wx:if="{{item.level && item.days}}"> · </text>
+      <text wx:if="{{item.days}}">{{item.days}} 天</text>
+    </view>
+    <view class="plan-summary">{{item.summary}}</view>
+  </view>
+
+  <view class="section-title">我的计划</view>
+  <view wx:for="{{mine}}" wx:key="_id" class="card" data-id="{{item._id}}" bindtap="goDetail">
+    <view class="plan-name">{{item.name}}</view>
+    <view class="plan-meta">
+      <text wx:if="{{item.level}}">{{item.level}}</text>
+      <text wx:if="{{item.level && item.days}}"> · </text>
+      <text wx:if="{{item.days}}">{{item.days}} 天</text>
+      <text wx:if="{{item.isRecommended}}"> · 推荐中</text>
+    </view>
+    <view class="plan-summary">{{item.summary}}</view>
+    <view class="actions">
+      <button class="ghost" size="mini" catchtap="openEdit" data-id="{{item._id}}">编辑</button>
+      <button class="ghost" size="mini" catchtap="deletePlan" data-id="{{item._id}}">删除</button>
+      <button class="ghost" size="mini" catchtap="toggleRecommend" data-id="{{item._id}}">{{item.isRecommended ? "取消推荐" : "设为推荐"}}</button>
+      <button class="ghost" size="mini" catchtap="setReminder" data-id="{{item._id}}">提醒</button>
+    </view>
+  </view>
+
+  <view wx:if="{{reminders.length}}" class="card">
+    <view class="section-title" style="margin:0;">已设提醒（每日）</view>
+    <view wx:for="{{reminders}}" wx:key="planId" class="reminder-row">
+      <view class="reminder-info">
+        <view class="reminder-name">{{item.planName}}</view>
+        <picker mode="time" value="{{item.time}}" data-id="{{item.planId}}" bindchange="onReminderTimeChange">
+          <view class="reminder-time">{{item.time}}</view>
+        </picker>
+      </view>
+      <button class="ghost" size="mini" data-id="{{item.planId}}" catchtap="removeReminder">取消</button>
+    </view>
+  </view>
+
+  <view wx:if="{{currentPlan}}" class="card">
+    <view class="section-title">当前查看</view>
+    <view class="plan-name">{{currentPlan.name}}</view>
+    <view class="plan-content">{{currentPlan.content}}</view>
+  </view>
+</view>
+

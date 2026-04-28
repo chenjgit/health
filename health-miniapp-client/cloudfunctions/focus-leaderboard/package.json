@@ -1,0 +1,9 @@
+{
+  "name": "focus-leaderboard",
+  "version": "1.0.0",
+  "description": "舒尔特表格全网榜单",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

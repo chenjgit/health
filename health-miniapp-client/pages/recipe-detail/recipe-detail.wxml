@@ -1,0 +1,32 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="card">
+    <view class="sub">加载中...</view>
+  </view>
+
+  <view wx:if="{{recipe}}" class="card">
+    <view class="title">{{recipe.name}}</view>
+    <view class="meta">
+      <text wx:if="{{recipe.source}}">{{recipe.source}}</text>
+      <text wx:if="{{recipe.source && recipe.category}}"> · </text>
+      <text wx:if="{{recipe.category}}">{{recipe.category}}</text>
+    </view>
+    <view wx:if="{{recipe.summary}}" class="summary">{{recipe.summary}}</view>
+    <view wx:if="{{recipe.cookTimeMinutes}}" class="meta2">用时约 {{recipe.cookTimeMinutes}} 分钟</view>
+    <image wx:if="{{recipe.coverUrl}}" class="cover" mode="aspectFill" src="{{recipe.coverUrl}}" />
+
+    <view class="section-header">食材准备</view>
+    <view class="content">{{recipe.ingredients}}</view>
+
+    <view class="section-header">制作步骤</view>
+    <view class="content">{{recipe.steps}}</view>
+
+    <view wx:if="{{recipe.tip}}" class="section-header">小贴士</view>
+    <view wx:if="{{recipe.tip}}" class="content">{{recipe.tip}}</view>
+
+    <view wx:if="{{recipe.link}}" class="actions">
+      <button class="ghost" bindtap="onOpenLink">查看原文</button>
+      <button class="ghost" bindtap="onCopyLink">复制链接</button>
+    </view>
+  </view>
+</view>
+

@@ -1,0 +1,191 @@
+<view class="page">
+  <view class="card header">
+    <view class="header-row">
+      <view class="title">舒尔特表格</view>
+      <view class="tab" bindtap="onSwitchTab" data-tab="{{activeTab === 'train' ? 'history' : 'train'}}">
+        {{activeTab === 'train' ? '历史/参考' : '训练'}}
+      </view>
+    </view>
+    <view wx:if="{{profileName}}" class="sub">已绑定：{{profileName}} · {{ageGroups[ageGroupIndex].label}}</view>
+    <view wx:else class="sub">未绑定：设置昵称与年龄段可生成评分与参考表</view>
+  </view>
+
+  <view wx:if="{{activeTab === 'train'}}">
+    <view class="card">
+      <view class="section-title" style="margin:0;">绑定信息</view>
+      <view class="row">
+        <view class="label">昵称</view>
+        <input class="input" placeholder="输入昵称（可选）" value="{{profileName}}" bindinput="onNameInput" />
+      </view>
+      <view class="row">
+        <view class="label">年龄段</view>
+        <picker mode="selector" range="{{ageGroups}}" range-key="label" value="{{ageGroupIndex}}" bindchange="onAgeGroupChange">
+          <view class="picker">{{ageGroups[ageGroupIndex].label}}</view>
+        </picker>
+      </view>
+      <view class="actions">
+        <button class="ghost" bindtap="onSaveProfile">保存绑定</button>
+        <button class="ghost" bindtap="onSwitchTab" data-tab="history">查看历史</button>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="section-title" style="margin:0;">训练设置</view>
+      <view class="row">
+        <view class="label">模式</view>
+        <picker mode="selector" range="{{playModes}}" value="{{playModeIndex}}" bindchange="onPlayModeChange">
+          <view class="picker">{{playModes[playModeIndex]}}</view>
+        </picker>
+      </view>
+
+      <view wx:if="{{playModeIndex === 0}}">
+        <view class="row">
+          <view class="label">玩法</view>
+          <picker mode="selector" range="{{orderModes}}" value="{{orderModeIndex}}" bindchange="onOrderModeChange">
+            <view class="picker">{{orderModes[orderModeIndex]}}</view>
+          </picker>
+        </view>
+      </view>
+      <view wx:else>
+        <view class="row">
+          <view class="label">闯关</view>
+          <view class="value">{{(challengeStages.length ? (stageIndex + 1) : 0)}} / {{challengeStages.length || 0}}</view>
+        </view>
+        <view class="row">
+          <view class="label">目标</view>
+          <view class="value">{{stageTargetText}}</view>
+        </view>
+      </view>
+
+      <view class="row">
+        <view class="label">难度</view>
+        <picker mode="selector" range="{{difficultyLabels}}" value="{{difficultyIndex}}" bindchange="onDifficultyChange">
+          <view class="picker">{{difficultyLabels[difficultyIndex]}}</view>
+        </picker>
+      </view>
+
+      <view class="row">
+        <view class="label">规格</view>
+        <picker mode="selector" range="{{sizes}}" value="{{sizeIndex}}" bindchange="onSizeChange">
+          <view class="picker">{{sizes[sizeIndex]}} x {{sizes[sizeIndex]}}（最大 10x10=100）</view>
+        </picker>
+      </view>
+
+      <view class="actions">
+        <button class="ghost" bindtap="reset">重新开始</button>
+        <button wx:if="{{playModeIndex === 1}}" class="primary" bindtap="startChallenge">开始闯关</button>
+        <button wx:else class="primary" bindtap="shuffle">重排数字</button>
+      </view>
+    </view>
+
+    <view class="card stats">
+      <view class="timer">{{elapsedText}}</view>
+      <view class="stats-row">
+        <view class="stats-item">下一步 <text class="strong">{{nextNumber}}</text></view>
+        <view class="stats-item">评分 <text class="strong">{{score}}</text></view>
+        <view wx:if="{{extraPenaltyMs}}" class="stats-item">失误 <text class="strong">+{{penaltySecondsText}}s</text></view>
+      </view>
+      <view wx:if="{{playModeIndex === 1}}" class="stats-row">
+        <view class="stats-item">剩余 <text class="strong">{{remainingText}}</text></view>
+        <view class="stats-item">限时 <text class="strong">{{stageTimeLimitText}}</text></view>
+        <view class="stats-item">失误 <text class="strong">{{mistakeCount}}/{{maxMistakes}}</text></view>
+      </view>
+      <view wx:if="{{penaltyText}}" class="penalty">{{penaltyText}}</view>
+      <view wx:if="{{reference}}" class="ref">
+        <view class="ref-item">优秀 ≤ {{refExcellentText}}</view>
+        <view class="ref-item">良好 ≤ {{refGoodText}}</view>
+        <view class="ref-item">达标 ≤ {{refPassText}}</view>
+      </view>
+      <view wx:if="{{stageResultText}}" class="stage-result">{{stageResultText}}</view>
+    </view>
+
+    <view class="grid card">
+      <view
+        wx:for="{{cells}}"
+        wx:key="n"
+        class="cell {{item.state}}"
+        style="width: {{cellSize}}rpx; height: {{cellSize}}rpx; font-size: {{fontSize}}rpx;"
+        data-n="{{item.n}}"
+        bindtap="onTapCell"
+      >
+        {{item.n}}
+      </view>
+    </view>
+
+    <view wx:if="{{finished && lastResult}}" class="card">
+      <view class="section-title" style="margin:0;">本次完成</view>
+      <view class="result-line">{{lastResult.size}}x{{lastResult.size}} · {{lastResult.playMode}} · {{lastResult.orderMode}} · {{lastResult.difficulty}}</view>
+      <view class="result-line">用时 {{lastResult.timeText}} · 评分 {{lastResult.score}} · {{lastResult.whenText}}</view>
+      <view class="actions">
+        <button class="primary" bindtap="nextRound">下一局（已重排）</button>
+        <button class="ghost" bindtap="onSwitchTab" data-tab="history">历史/参考</button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else>
+    <view class="card">
+      <view class="section-title" style="margin:0;">全网榜单</view>
+      <view class="sub">综合榜 Top 20（按评分优先，其次用时）</view>
+      <view wx:if="{{!cloudLeaderboardOverall.length}}" class="sub">暂无数据</view>
+      <view wx:for="{{cloudLeaderboardOverall}}" wx:key="_id" class="board-item">
+        <view class="board-rank">{{index + 1}}</view>
+        <view class="board-main">
+          <view class="board-title">{{item.nickname}} · {{item.size}}x{{item.size}} · {{item.timeText}}</view>
+          <view class="board-sub">评分 {{item.score}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="section-title" style="margin:0;">本机榜单</view>
+      <view class="sub">综合榜 Top 20（按评分优先，其次用时）</view>
+      <view wx:if="{{!leaderboardOverall.length}}" class="sub">暂无数据</view>
+      <view wx:for="{{leaderboardOverall}}" wx:key="id" class="board-item">
+        <view class="board-rank">{{index + 1}}</view>
+        <view class="board-main">
+          <view class="board-title">{{item.playerName}} · {{item.size}}x{{item.size}} · {{item.timeText}}</view>
+          <view class="board-sub">评分 {{item.score}} · {{item.whenText}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="section-title" style="margin:0;">经典模式-成绩对照表</view>
+      <view wx:for="{{classicReferenceSections}}" wx:key="id" class="ref-section">
+        <view class="ref-header ref-tone-{{item.tone}}">{{item.title}}</view>
+        <view class="ref-table">
+          <view class="ref-row ref-head">
+            <view class="ref-cell">年龄</view>
+            <view class="ref-cell">优秀</view>
+            <view class="ref-cell">平均</view>
+            <view class="ref-cell">问题</view>
+          </view>
+          <view wx:for="{{item.rows}}" wx:key="ageLabel" class="ref-row">
+            <view class="ref-cell">{{item.ageLabel}}</view>
+            <view class="ref-cell">{{item.excellent}}</view>
+            <view class="ref-cell">{{item.good}}</view>
+            <view class="ref-cell">{{item.pass}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="sub">参考数据来自公开资料（toolshu.com），仅用于训练对照</view>
+      <view class="actions">
+        <button class="ghost" bindtap="onSwitchTab" data-tab="train">返回训练</button>
+        <button class="ghost" bindtap="clearHistory">清空历史</button>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="section-title" style="margin:0;">历史测试数据（{{historyCount}}）</view>
+      <view wx:if="{{!history.length}}" class="sub">暂无记录，完成一次训练后会自动保存</view>
+      <view wx:for="{{history}}" wx:key="id" class="history-item">
+        <view class="history-main">
+          <view class="history-title">{{item.size}}x{{item.size}} · {{item.playMode}} · {{item.orderMode}} · {{item.difficulty}}</view>
+          <view class="history-sub">{{item.timeText}} · 评分 {{item.score}}</view>
+        </view>
+        <view class="history-time">{{item.whenText}}</view>
+      </view>
+    </view>
+  </view>
+</view>

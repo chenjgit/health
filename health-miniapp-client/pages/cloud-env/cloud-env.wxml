@@ -1,0 +1,32 @@
+<view class="page">
+  <view class="card">
+    <view class="title">云环境设置</view>
+    <view class="sub">用于修复 cloud.callFunction:fail -501000（资源不存在）等问题</view>
+  </view>
+
+  <view class="card">
+    <view class="row">
+      <view class="label">AppID</view>
+      <view class="value">{{appId}}</view>
+    </view>
+    <view class="row">
+      <view class="label">当前环境ID</view>
+      <view class="value">{{currentEnvId || "未设置"}}</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="label">填写环境ID</view>
+    <input class="input" placeholder="例如：cloud1-xxxxxxxxxxxx" value="{{envIdInput}}" bindinput="onInput" />
+    <view class="actions">
+      <button class="ghost" bindtap="clearEnv">清空</button>
+      <button class="primary" bindtap="saveEnv">保存并重启</button>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="label">需要部署</view>
+    <view class="tips">确保云开发控制台中该环境已部署云函数，并创建集合：user / daily_checkin / health_plan / favorite / runtime_cache</view>
+  </view>
+</view>
+

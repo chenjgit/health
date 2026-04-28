@@ -1,0 +1,78 @@
+<view class="page">
+  <view class="card header">
+    <view class="header-row">
+      <view class="title">备忘录 + 倒计时</view>
+    </view>
+    <view class="tab-row">
+      <view class="tab {{tabIndex === 0 ? 'active' : ''}}" data-idx="0" bindtap="onTabChange">备忘录</view>
+      <view class="tab {{tabIndex === 1 ? 'active' : ''}}" data-idx="1" bindtap="onTabChange">倒计时</view>
+    </view>
+  </view>
+
+  <view wx:if="{{tabIndex === 0}}">
+    <view class="card">
+      <view class="section-title">新增备忘</view>
+      <input class="input" placeholder="标题" value="{{memoTitle}}" bindinput="onMemoTitle" />
+      <textarea class="textarea" placeholder="内容" value="{{memoContent}}" bindinput="onMemoContent" />
+      <button class="primary" bindtap="addMemo">添加</button>
+    </view>
+
+    <view class="card">
+      <view class="section-title">历史记录</view>
+      <view wx:if="{{!memoList.length}}" class="sub">暂无备忘</view>
+      <view wx:for="{{memoList}}" wx:key="id" class="list-item">
+        <view class="list-main" data-id="{{item.id}}" bindtap="viewMemo">
+          <view class="list-title">{{item.title}}</view>
+          <view class="list-sub">{{item.content}}</view>
+        </view>
+        <button class="ghost mini" data-id="{{item.id}}" bindtap="deleteMemo">删除</button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else>
+    <view class="card">
+      <view class="section-title">新增倒计时</view>
+      <input class="input" placeholder="标题（例如：喝水提醒/复查）" value="{{timerTitle}}" bindinput="onTimerTitle" />
+      <view class="row">
+        <picker mode="date" value="{{timerTargetDate}}" bindchange="onTimerDate">
+          <view class="picker">{{timerTargetDate || '选择日期'}}</view>
+        </picker>
+        <picker mode="time" value="{{timerTargetTime}}" bindchange="onTimerTime">
+          <view class="picker">{{timerTargetTime || '选择时间'}}</view>
+        </picker>
+      </view>
+      <button class="primary" bindtap="addTimer">添加</button>
+    </view>
+
+    <view class="card">
+      <view class="section-title">进行中</view>
+      <view wx:if="{{!timerList.length}}" class="sub">暂无倒计时</view>
+      <view wx:for="{{timerList}}" wx:key="id" class="timer-item">
+        <view class="timer-main">
+          <view class="timer-title">{{item.title}}</view>
+          <view class="timer-sub">目标：{{formatDateTime(item.targetTs)}} · 剩余 {{item.remainText}}</view>
+        </view>
+        <view class="timer-actions">
+          <button class="primary mini" data-id="{{item.id}}" bindtap="finishTimer">完成</button>
+          <button class="ghost mini" data-id="{{item.id}}" bindtap="deleteTimer">删除</button>
+        </view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="section-title">历史追溯</view>
+      <view class="actions">
+        <button class="ghost" bindtap="clearTimerHistory">清空历史</button>
+      </view>
+      <view wx:if="{{!timerHistory.length}}" class="sub">暂无历史</view>
+      <view wx:for="{{timerHistory}}" wx:key="id" class="history-item">
+        <view class="history-main">
+          <view class="history-title">{{item.title}}</view>
+          <view class="history-sub">目标：{{formatDateTime(item.targetTs)}} · 完成：{{formatDateTime(item.doneAt)}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+

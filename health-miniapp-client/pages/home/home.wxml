@@ -1,0 +1,89 @@
+<view class="page">
+  <view wx:if="{{news.length}}" class="card">
+    <view class="section-title" style="margin:0;">健康资讯</view>
+    <swiper class="news-swiper" vertical autoplay circular interval="3000" duration="400">
+      <swiper-item wx:for="{{news}}" wx:key="_id">
+        <view class="news-item" data-id="{{item._id}}" data-link="{{item.link}}" data-title="{{item.title}}" bindtap="onTapNews">
+          <view class="news-item-content">
+            <view class="news-title">{{item.title}}</view>
+            <view class="news-meta">{{item.source}} · {{item.publishedAt}}</view>
+          </view>
+          <view class="news-arrow">›</view>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <view wx:if="{{tips.length}}" class="card">
+    <view class="section-title" style="margin:0;">每日养生知识</view>
+    <swiper class="news-swiper" vertical autoplay circular interval="3000" duration="400">
+      <swiper-item wx:for="{{tips}}" wx:key="_id">
+        <view class="news-item" data-title="{{item.title}}" data-content="{{item.content}}" data-link="{{item.link}}" bindtap="onTapTip">
+          <view class="news-item-content">
+            <view class="news-title">{{item.title}}</view>
+            <view class="news-meta">{{item.source}}</view>
+          </view>
+          <view class="news-arrow">›</view>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <view class="card">
+    <view class="title">健康养生</view>
+    <view class="sub">今日推荐健康科普与生活习惯建议</view>
+
+    <view class="quick-actions">
+      <button class="ghost" bindtap="goCheckin">去打卡</button>
+      <button class="ghost" bindtap="goRecipes">养生食谱</button>
+      <button class="ghost" bindtap="goPlan">健康计划</button>
+      <button class="ghost" bindtap="goFocus">专注力工具</button>
+      <button class="ghost" bindtap="goMemo">备忘录</button>
+    </view>
+
+    <view class="search">
+      <input class="search-input" placeholder="搜索文章标题/摘要" value="{{q}}" bindinput="onInput" confirm-type="search" bindconfirm="onSearch" />
+      <button class="search-btn" size="mini" bindtap="onSearch">搜索</button>
+    </view>
+
+    <view class="search" style="margin-top:12rpx;">
+      <picker mode="selector" range="{{sortOptions}}" value="{{sortIndex}}" bindchange="onSortChange">
+        <view class="search-btn" style="padding: 14rpx 18rpx;">{{sortOptions[sortIndex]}}</view>
+      </picker>
+      <picker mode="selector" range="{{platformOptions}}" value="{{platformIndex}}" bindchange="onPlatformChange">
+        <view class="search-btn" style="padding: 14rpx 18rpx;">{{platformOptions[platformIndex]}}</view>
+      </picker>
+    </view>
+
+    <view class="search" style="margin-top:12rpx;">
+      <picker mode="date" value="{{fromDate}}" bindchange="onFromDateChange">
+        <view class="search-btn" style="padding: 14rpx 18rpx;">{{fromDate || '开始日期'}}</view>
+      </picker>
+      <picker mode="date" value="{{toDate}}" bindchange="onToDateChange">
+        <view class="search-btn" style="padding: 14rpx 18rpx;">{{toDate || '结束日期'}}</view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="section-title">最新文章</view>
+
+  <view wx:if="{{loading}}" class="card">
+    <view class="sub">加载中...</view>
+  </view>
+
+  <view wx:for="{{articles}}" wx:key="_id" class="card article" data-id="{{item._id}}" bindtap="goDetail">
+    <view class="article-row">
+      <view class="article-main">
+        <view class="article-title">{{item.title}}</view>
+        <view class="article-summary">{{item.summary}}</view>
+        <view class="article-meta">{{item.category}}  ·  {{item.createdAt}}  ·  {{item.viewCount || 0}} 阅读</view>
+      </view>
+      <image wx:if="{{item.coverUrl}}" class="article-cover" mode="aspectFill" src="{{item.coverUrl}}" />
+    </view>
+  </view>
+
+  <view wx:if="{{loadingMore}}" class="card">
+    <view class="sub">加载更多...</view>
+  </view>
+</view>
+

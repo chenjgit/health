@@ -1,0 +1,49 @@
+<view class="page">
+  <view class="card">
+    <view class="title">养生食谱</view>
+    <view class="sub">按功效、体质或关键词筛选合适的日常饮食</view>
+
+    <view class="search">
+      <input class="search-input" placeholder="搜索食谱名称/简介" value="{{q}}" bindinput="onInput" confirm-type="search" bindconfirm="onSearch" />
+      <button class="search-btn" size="mini" bindtap="onSearch">搜索</button>
+    </view>
+
+    <view class="filters">
+      <picker mode="selector" range="{{categories}}" value="{{categoryIndex}}" bindchange="onCategoryChange">
+        <view class="filter-pill">分类：{{categoryLabel}}</view>
+      </picker>
+      <picker mode="selector" range="{{effects}}" value="{{effectIndex}}" bindchange="onEffectChange">
+        <view class="filter-pill">功效：{{effectLabel}}</view>
+      </picker>
+      <picker mode="selector" range="{{constitutions}}" value="{{constitutionIndex}}" bindchange="onConstitutionChange">
+        <view class="filter-pill">体质：{{constitutionLabel}}</view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="section-title">推荐食谱</view>
+
+  <view wx:if="{{loading}}" class="card">
+    <view class="sub">加载中...</view>
+  </view>
+
+  <view wx:for="{{recipes}}" wx:key="_id" class="card recipe" data-id="{{item._id}}" bindtap="goDetail">
+    <view class="recipe-row">
+      <view class="recipe-main">
+        <view class="recipe-name">{{item.name}}</view>
+        <view class="recipe-summary">{{item.summary}}</view>
+        <view class="recipe-meta">
+          <text wx:if="{{item.source}}">{{item.source}}</text>
+          <text wx:if="{{item.source && item.category}}"> · </text>
+          <text wx:if="{{item.category}}">{{item.category}}</text>
+        </view>
+      </view>
+      <image wx:if="{{item.coverUrl}}" class="recipe-cover" mode="aspectFill" src="{{item.coverUrl}}" />
+    </view>
+  </view>
+
+  <view wx:if="{{loadingMore}}" class="card">
+    <view class="sub">加载更多...</view>
+  </view>
+</view>
+

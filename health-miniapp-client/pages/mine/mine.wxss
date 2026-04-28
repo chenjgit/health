@@ -1,0 +1,110 @@
+@import "../../app.wxss";
+
+.page {
+  padding-bottom: 40rpx;
+}
+
+.sub {
+  margin-top: 12rpx;
+  color: #6b7280;
+  font-size: 28rpx;
+}
+
+.user-top {
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+}
+
+.avatar-wrap {
+  position: relative;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 999rpx;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 999rpx;
+}
+
+.avatar-badge {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 6rpx 10rpx;
+  border-radius: 999rpx;
+  background: rgba(17, 24, 39, 0.75);
+  color: #ffffff;
+  font-size: 20rpx;
+}
+
+.user-meta {
+  flex: 1;
+}
+
+.nickname {
+  color: #111827;
+  font-size: 36rpx;
+  font-weight: 800;
+}
+
+.row {
+  display: flex;
+  gap: 16rpx;
+  padding: 12rpx 0;
+}
+
+.k {
+  width: 160rpx;
+  color: #6b7280;
+  font-size: 26rpx;
+}
+
+.v {
+  flex: 1;
+  color: #111827;
+  font-size: 26rpx;
+  word-break: break-all;
+}
+
+.input {
+  width: 100%;
+  padding: 10rpx 14rpx;
+  border-radius: 14rpx;
+  background: #f9fafb;
+  border: 2rpx solid #e5e7eb;
+  color: #111827;
+  font-size: 28rpx;
+}
+
+.picker {
+  color: #15803d;
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.ghost {
+  margin-top: 20rpx;
+  background: #f0fdf4;
+  color: #15803d;
+  border: 2rpx solid #bbf7d0;
+}
+
+.mini {
+  margin-top: 0;
+  padding: 0 18rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  font-size: 26rpx;
+}
+
+.primary {
+  margin-top: 16rpx;
+  background: #22c55e;
+  color: #ffffff;
+}
+

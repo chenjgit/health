@@ -1,0 +1,26 @@
+{
+  "envId": "cloud1-d3gw8242lcf851198",
+  "functionRoot": "health-miniapp-client/cloudfunctions",
+  "functions": [
+    { "name": "auth-login" },
+    { "name": "article-list" },
+    { "name": "article-detail" },
+    { "name": "checkin-today" },
+    { "name": "checkin-upsert" },
+    { "name": "checkin-history" },
+    { "name": "recipe-list" },
+    { "name": "recipe-detail" },
+    { "name": "plan-list" },
+    { "name": "plan-create" },
+    { "name": "plan-update" },
+    { "name": "plan-delete" },
+    { "name": "plan-recommend-toggle" },
+    { "name": "tip-today" },
+    { "name": "news-latest" },
+    { "name": "favorite-toggle" },
+    { "name": "favorite-check" },
+    { "name": "favorite-list" },
+    { "name": "focus-submit" },
+    { "name": "focus-leaderboard" }
+  ]
+}

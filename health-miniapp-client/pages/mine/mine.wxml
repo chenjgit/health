@@ -1,0 +1,79 @@
+<view class="page">
+  <!-- 未登录状态 -->
+  <view wx:if="{{!userId}}" class="card user-card">
+    <view class="avatar-wrap">
+      <image class="avatar" src="/images/avatar_default.png" mode="aspectFill"/>
+    </view>
+    <view class="user-meta">
+      <view class="nickname">未登录</view>
+      <view class="sub">登录后可使用全部功能</view>
+    </view>
+    <button class="primary" style="margin-top: 20rpx;" bindtap="onLoginTap" loading="{{loginLoading}}">微信一键登录</button>
+  </view>
+
+  <!-- 已登录状态 -->
+  <view wx:else class="card user-card">
+    <view class="user-top">
+      <view class="avatar-wrap" bindtap="toggleEdit">
+        <image class="avatar" src="{{userInfo.avatarUrl || '/images/avatar_default.png'}}" mode="aspectFill"/>
+        <view class="avatar-badge">编辑</view>
+      </view>
+      <view class="user-meta">
+        <view class="nickname">{{userInfo.nickName || '健康用户'}}</view>
+        <view class="sub">性别：{{userInfo.gender || '未知'}} · 年龄：{{userInfo.age || '未设置'}}</view>
+      </view>
+      <button class="ghost mini" bindtap="toggleEdit">{{editing ? '取消' : '编辑资料'}}</button>
+    </view>
+  </view>
+
+  <view wx:if="{{userId && editing}}" class="card">
+    <view class="section-title">个人资料</view>
+    <view class="row">
+      <view class="k">头像</view>
+      <view class="v">
+        <button class="ghost mini" bindtap="chooseAvatar">更换头像</button>
+      </view>
+    </view>
+    <view class="row">
+      <view class="k">昵称</view>
+      <view class="v">
+        <input class="input" placeholder="请输入昵称" value="{{form.nickname}}" bindinput="onNicknameInput" />
+      </view>
+    </view>
+    <view class="row">
+      <view class="k">性别</view>
+      <view class="v">
+        <picker mode="selector" range="{{genderOptions}}" bindchange="onGenderChange">
+          <view class="picker">{{form.gender}}</view>
+        </picker>
+      </view>
+    </view>
+    <view class="row">
+      <view class="k">年龄</view>
+      <view class="v">
+        <input class="input" type="number" placeholder="请输入年龄" value="{{form.age}}" bindinput="onAgeInput" />
+      </view>
+    </view>
+    <button class="primary" bindtap="saveProfile">保存资料</button>
+  </view>
+
+  <!-- 小工具入口 -->
+  <view class="card">
+    <view class="section-title">健康工具</view>
+    <button class="ghost" bindtap="goRecipes">养生食谱</button>
+    <button class="ghost" style="margin-top: 12rpx;" bindtap="goPlan">健康计划</button>
+    <button class="ghost" style="margin-top: 12rpx;" bindtap="goMemo">备忘录与倒计时</button>
+  </view>
+
+  <!-- 账号操作 -->
+  <view class="card">
+    <view class="section-title">账号操作</view>
+    <button class="ghost" bindtap="logout">退出登录</button>
+    <button class="ghost" style="margin-top: 12rpx;" bindtap="onLoginTap" loading="{{loginLoading}}">重新授权登录</button>
+  </view>
+
+  <view class="card">
+    <view class="section-title">开发调试</view>
+    <button class="ghost" bindtap="goCloudEnv">云环境设置</button>
+  </view>
+</view>

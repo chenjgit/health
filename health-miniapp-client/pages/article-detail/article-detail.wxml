@@ -1,0 +1,32 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="card">
+    <view class="sub">加载中...</view>
+  </view>
+
+  <view wx:if="{{article}}" class="card">
+    <view class="title">{{article.title}}</view>
+    <view class="meta">{{article.category}} · {{article.createdAt}} · {{views}} 阅读</view>
+    <image wx:if="{{article.coverUrl}}" class="cover" mode="aspectFill" src="{{article.coverUrl}}" />
+    <view class="content">{{article.content}}</view>
+    <view class="actions">
+      <button class="ghost" bindtap="onToggleFavorite">{{collected ? "已收藏" : "收藏"}}</button>
+      <button class="ghost" bindtap="onToggleLike">{{liked ? "已点赞" : "点赞"}} {{likes}}</button>
+      <button wx:if="{{article.link}}" class="ghost" bindtap="onOpenLink">查看原文</button>
+      <button wx:if="{{article.link}}" class="ghost" bindtap="onCopyLink">复制链接</button>
+    </view>
+  </view>
+
+  <view wx:if="{{article}}" class="card">
+    <view class="section-title" style="margin:0;">评论</view>
+    <view class="comment-box">
+      <textarea class="comment-input" placeholder="写下你的看法…" value="{{commentInput}}" bindinput="onCommentInput" />
+      <button class="primary" bindtap="onSubmitComment">发布</button>
+    </view>
+    <view wx:if="{{!comments.length}}" class="sub" style="margin-top: 12rpx;">暂无评论</view>
+    <view wx:for="{{comments}}" wx:key="id" class="comment-item">
+      <view class="comment-content">{{item.content}}</view>
+      <view class="comment-meta">{{item.createdAt}}</view>
+    </view>
+  </view>
+</view>
+
